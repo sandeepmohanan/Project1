@@ -91,5 +91,7 @@ for (int i = 0; i < list.size();i++)
 <br>
 
 			<a href="addSubject.jsp?subid=<%=id%>" class="button">ADD NEW SUBJECT</a>  
+
+
 </body>
 </html>

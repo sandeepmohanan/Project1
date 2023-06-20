@@ -170,7 +170,143 @@ public class courseAdministrationAction {
 		  
 	}
 	
+	public  ArrayList viewAssignedCourses(String fid)
+	{
 	
+		Persons.clear();
+		try{  
+			
+		Connection con=getDBConnection.getDBConnections();  
+		  String SQL = "{call SP_GetCourseAssagnment('1244')}";
+		  cstmt = con.prepareCall (SQL);
+          
+          
+		              
+		ResultSet rs=cstmt.executeQuery();  
+		while(rs.next())
+		{
+			String[] temp = new String[4];
+			
+			
+			temp[0]=rs.getString(1);
+			temp[1]=rs.getString(2);
+			temp[2]=rs.getString(3);
+			temp[3]=rs.getString(4);
+			
+			
+			Persons.add(temp);
+		}
+		     
+		
+		System.out.println("List size="+Persons.size());
+		
+		}catch(Exception e){
+			System.out.println("err in viewregistration: " + e);}  
+		  
+	
+		return Persons;  
+	}
+		public  ArrayList getWeekmaterial(String CID)
+	{
+		Persons.clear();
+		try{  
+			
+		Connection con=getDBConnection.getDBConnections();  
+		              
+		PreparedStatement ps=con.prepareStatement("SELECT [WeekNumber],[createddate]  FROM [portal].[dbo].[SubjectWeeks] where [SubID]=?");  
+	   ps.setString(1,CID);
+		 
+		              
+		ResultSet rs=ps.executeQuery();  
+		while(rs.next())
+		{
+			String[] temp = new String[2];
+			
+			
+			temp[0]=rs.getString(1);
+			temp[1]=rs.getString(2);
+		
+			
+	
+			Persons.add(temp);
+		}
+		     
+		
+		System.out.println("List size="+Persons.size());
+		
+		}catch(Exception e){
+			System.out.println("err in viewregistration: " + e);}  
+		  
+	
+		return Persons;  
+	}
+		
+		
+		
+		public int addWeek(String subid,String wname)
+		{
+			int  x=0;  
+			
+			try{
+				Connection con=getDBConnection.getDBConnections();  
+				PreparedStatement ps=con.prepareStatement("insert into [portal].[dbo].[SubjectWeeks](SubID,WeekNumber) values(?,?)");
+				ps.setString(1,subid);
+				
+				ps.setString(2,wname);
+			
+
+				
+				x=ps.executeUpdate();
+				}catch(Exception e)
+			{
+					System.out.println("err in ApproveRegistration: " + e);}
+
+				return x;
+			  
+		}
+		
+	
+		
+		
+		
+		public  ArrayList getAssessments(String CID)
+		{
+			Persons.clear();
+			try{  
+				
+			Connection con=getDBConnection.getDBConnections();  
+			              
+			PreparedStatement ps=con.prepareStatement("SELECT [Title] ,[File1],[File2] ,[File3] ,[Comment],[deadline],[createddate]  FROM [portal].[dbo].[SubjectAssessment] where [SubID]=?");  
+		   ps.setString(1,CID);
+			 
+			              
+			ResultSet rs=ps.executeQuery();  
+			while(rs.next())
+			{
+				String[] temp = new String[7];
+				temp[0]=rs.getString(1);
+				temp[1]=rs.getString(2);
+				temp[2]=rs.getString(3);
+				temp[3]=rs.getString(4);
+				temp[4]=rs.getString(5);
+				temp[5]=rs.getString(6);
+				temp[6]=rs.getString(7);
+		
+				
+		
+				Persons.add(temp);
+			}
+			     
+			
+			System.out.println("List size="+Persons.size());
+			
+			}catch(Exception e){
+				System.out.println("err in viewregistration: " + e);}  
+			  
+		
+			return Persons;  
+		}
+			
 	}
 	
 	
